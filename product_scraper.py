@@ -14,11 +14,11 @@ filtered_data = []
 
 for product in products_data:
     s = {
-            "Name": product['name'],
+            "SellerName": product['sellerName'],
+            "SellerId": product['sellerId'],
+            "ProductName": product['name'],
             "RatingScore": product['ratingScore'],
             "Review": product['review'],
-            "SellerId": product['sellerId'],
-            "SellerName": product['sellerName'],
         }
     filtered_data.append(s)
 
