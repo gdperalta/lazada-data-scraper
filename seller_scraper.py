@@ -7,7 +7,7 @@ query = '/watsons?path=profile.htm'
 
 txt = requests.get(url + query).text
 # txt.replace("\","")
-with open('./data/seller_profile/seller_lazada.txt','w') as w:
+with open('./data/seller_profile/seller_lazada.txt', 'w') as w:
     script = re.findall(r'window.__translations__ =(.*)', txt)
     str_scr = ''.join(script)
     print(str_scr, file=w)
