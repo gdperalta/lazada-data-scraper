@@ -18,11 +18,19 @@ import csv
 
 URL = 'https://www.lazada.com.ph/catalog/?from=input&q='
 FIELD_NAMES = [
-                'seller_name',
-                'seller_id',
                 'product_name',
+                'image',
+                'original_price',
+                'price',
+                'discount',
                 'rating_score',
-                'reviews'
+                'reviews',
+                'location',
+                'brand_id',
+                'brand_name',
+                'seller_id',
+                'seller_name',
+                'item_url'
               ]
 query = 'laptop&location=Local&rating=4'
 PRODUCTS_INFO = []
@@ -48,11 +56,19 @@ def scrape_data():
 def filter_data(data):
     for d in data:
         filtered_data = {
-            "seller_name": d['sellerName'],
-            "seller_id": d['sellerId'],
             "product_name": d['name'],
+            "image": d['image'],
+            "original_price": d.get('originalPrice', ''),
+            "price": d['price'],
+            "discount": d.get('discount', 'N/A'),
             "rating_score": d['ratingScore'],
             "reviews": d['review'],
+            "location": d['location'],
+            "brand_id": d['brandId'],
+            "brand_name": d['brandName'],
+            "seller_id": d['sellerId'],
+            "seller_name": d['sellerName'],
+            "item_url": d['itemUrl'],
         }
 
         PRODUCTS_INFO.append(filtered_data)
@@ -65,7 +81,8 @@ def download_to_json():
 
 
 def download_to_csv():
-    with open('./data/product_search/product_lazada.csv', 'w', encoding='UTF8', newline='') as w:
+    with open('./data/product_search/product_lazada.csv', 'w',
+              encoding='utf-8-sig', newline='') as w:
         data = csv.DictWriter(w, fieldnames=FIELD_NAMES)
         data.writeheader()
         data.writerows(PRODUCTS_INFO)
