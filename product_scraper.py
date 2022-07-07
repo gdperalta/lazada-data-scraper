@@ -14,27 +14,29 @@ Created: July 4, 2022
 import requests  # handles communication with api
 import re        # handles regex matches
 import json      # handles conversion to json
-import csv
+import csv       # handles conversion to csv
+
+from unidecode import unidecode  # represents unicode text in ASCII
+
 
 URL = 'https://www.lazada.com.ph/catalog/?from=input&q='
+query = 'laptop&location=Local&rating=4'
 FIELD_NAMES = [
-                'product_name',
+                'name',
                 'image',
-                'original_price',
+                'originalPrice',
                 'price',
                 'discount',
-                'rating_score',
-                'reviews',
+                'ratingScore',
+                'review',
                 'location',
-                'brand_id',
-                'brand_name',
-                'seller_id',
-                'seller_name',
-                'item_url'
+                'brandId',
+                'brandName',
+                'sellerId',
+                'sellerName',
+                'itemUrl'
               ]
-query = 'laptop&location=Local&rating=4'
 PRODUCTS_INFO = []
-# search = input('Search item in Lazada: ')
 
 
 def main():
@@ -55,21 +57,10 @@ def scrape_data():
 
 def filter_data(data):
     for d in data:
-        filtered_data = {
-            "product_name": d['name'],
-            "image": d['image'],
-            "original_price": d.get('originalPrice', ''),
-            "price": d['price'],
-            "discount": d.get('discount', 'N/A'),
-            "rating_score": d['ratingScore'],
-            "reviews": d['review'],
-            "location": d['location'],
-            "brand_id": d['brandId'],
-            "brand_name": d['brandName'],
-            "seller_id": d['sellerId'],
-            "seller_name": d['sellerName'],
-            "item_url": d['itemUrl'],
-        }
+        filtered_data = {}
+        for field in FIELD_NAMES:
+            new_field = {field: unidecode(d.get(field, 'N/A'))}
+            filtered_data.update(new_field)
 
         PRODUCTS_INFO.append(filtered_data)
 
