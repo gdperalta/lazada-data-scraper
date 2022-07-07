@@ -40,8 +40,8 @@ PRODUCTS_INFO = []
 
 
 def main():
-    data = scrape_data()
-    iterate_data(data)
+    products_data = scrape_data()
+    iterate_data(products_data)
     # download_to_json()
     download_to_csv()
 
@@ -56,8 +56,8 @@ def scrape_data():
 
 
 def iterate_data(data):
-    for d in data:
-        filtered_data = filter_data(d)
+    for products in data:
+        filtered_data = filter_data(products)
 
         PRODUCTS_INFO.append(filtered_data)   
 
@@ -79,14 +79,14 @@ def filter_data(data):
 
 def download_to_json():
     data = json.dumps(PRODUCTS_INFO, indent=4)
-    with open('./data/product_search/product_lazada.json', 'w') as w:
-        w.write(data)
+    with open('./data/product_search/product_lazada.json', 'w') as file:
+        file.write(data)
 
 
 def download_to_csv():
     with open('./data/product_search/product_lazada.csv', 'w',
-              encoding='utf-8-sig', newline='') as w:
-        data = csv.DictWriter(w, fieldnames=FIELD_NAMES)
+              encoding='utf-8-sig', newline='') as file:
+        data = csv.DictWriter(file, fieldnames=FIELD_NAMES)
         data.writeheader()
         data.writerows(PRODUCTS_INFO)
 
