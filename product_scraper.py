@@ -41,7 +41,7 @@ PRODUCTS_INFO = []
 
 def main():
     data = scrape_data()
-    filter_data(data)
+    iterate_data(data)
     # download_to_json()
     download_to_csv()
 
@@ -55,14 +55,26 @@ def scrape_data():
     return formatted_products_data
 
 
-def filter_data(data):
+def iterate_data(data):
     for d in data:
-        filtered_data = {}
-        for field in FIELD_NAMES:
-            new_field = {field: unidecode(d.get(field, 'N/A'))}
-            filtered_data.update(new_field)
+        filtered_data = filter_data(d)
 
-        PRODUCTS_INFO.append(filtered_data)
+        PRODUCTS_INFO.append(filtered_data)   
+
+
+def filter_data(data):
+    filtered_data = {}
+    for field in FIELD_NAMES:
+        value = unidecode(data.get(field, 'N/A'))
+
+        # for evaluation of better solution
+        if field == 'itemUrl':
+            value = value.replace('//', '', 1)
+
+        new_field = {field: value}
+        filtered_data.update(new_field)
+
+    return filtered_data
 
 
 def download_to_json():
