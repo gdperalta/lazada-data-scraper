@@ -1,10 +1,18 @@
 """Scrapes a list of sellers from Lazada by products.
 Returns the following data in json format:
-- Seller Name
-- Seller ID (can be used in the future to fetch metrics and performance)
-- Product Name
+- Name (of product)
+- Image
+- Original Price
+- Price
+- Discount
 - Rating Score
 - Review
+- Location
+- Brand ID
+- Brand Name
+- Seller ID (can be used in the future to fetch metrics and performance)
+- Seller Name
+- Item URL
 
 Author: Godfrey Peralta <godfrey@kayafounders.com>
 
